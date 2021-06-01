@@ -3,10 +3,11 @@ This RATT documentation assumes the following knowledge:
 - Basic understanding of typescript
 - Basic familiarity with linked data and TriplyDB
 
-RATT is a [Typescript package](https://www.npmjs.com/package/@triply/ratt) developed by Triply B.V. in order to easily be capable of developing an ETL (Extract, Transform, Load)  process and thus transforming existing data to linked data. The core idea of RATT is that unput data is processed record for record. Making the ETL process faster.
+RATT is a [Typescript package](https://www.npmjs.com/package/@triply/ratt) developed by Triply B.V., in order to easily be capable of developing an ETL (Extract, Transform, Load)  process and transforming existing data to linked data. 
+The core idea of RATT is that input data is processed record for record, thus making the ETL process faster.
 
 ## Defining a RATT app
-First, you need to define a RATT app. In the definition of a RATT app you can specifiy the default graph, sources, destinations, and prefixes used later on in the ETL.
+First, you need to define a RATT app. In this step, you can specify the default graph, sources and destinations. The `defaultGraph` will be the graph of your output linked data. Also with `destinations`, you set where your data will be stored and, with `sources`, you set the input data that will be used in the ETL process.
    ```sh
   const app = new Ratt({
      defaultGraph: "https://example.org/",
@@ -14,10 +15,12 @@ First, you need to define a RATT app. In the definition of a RATT app you can sp
     destinations: {
       out: Ratt.Destination.TriplyDb.rdf("test-etl-boilerplate"),
     },
+    sources: {
+      input: Ratt.Source.file("rdf/input/test.trig"),
   })
    ```
 ### Specifying prefixes
-When you are defining a RATT app you specify the prefixes used in your data. These can then be reused in the script to make the code more compact. See the code snippet below to see how you can specify prefixes when you are defining a RATT app.
+When you are defining a RATT app, you can also specify the prefixes used in your data, so that they can then be reused in the script and thus make the code more compact.
 
 ```sh
 const app = new Ratt({
@@ -31,12 +34,9 @@ const app = new Ratt({
 ```
 
 
-### Default graph
-When you are defining a RATT app you also need to specify your default graph. This is the graph to which you will write your linked data.
-
-
 ## RATT runner
 The RATT package includes a runner that runs your RATT script for you when you call the following commands:
+
 ```sh
 yarn
 yarn build
